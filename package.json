@@ -1,0 +1,19 @@
+{
+  "name": "varid-advanced-task",
+  "version": "1.0.0",
+  "description": "Advanced Task for Varid recrutation process",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eremziom/varid-advanced-task.git"
+  },
+  "author": "Maciej Kryczka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eremziom/varid-advanced-task/issues"
+  },
+  "homepage": "https://github.com/eremziom/varid-advanced-task#readme"
+}
