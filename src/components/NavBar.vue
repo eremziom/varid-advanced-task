@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-3 nav">
+    <div class="mb-3 d-flex justify-content-around nav">
         <b-button  variant="info" v-on:click="changeView(1)">TABLE</b-button>
         <b-button  variant="info" v-on:click="changeView(2)">FORM</b-button>
     </div>
@@ -13,18 +13,12 @@ export default {
             this.$emit('changeView', arg)
         },
     },
-    data: function(){
-        return{
-            tableNav: '',
-            formNav: ''
-        }
-    }
 }
 </script>
 
 <style lang="css" scoped>
     .nav {
-        display: flex;
-        justify-content: space-evenly
+        max-width: 500px;
+        margin: 0 auto;
     }
 </style>

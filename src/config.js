@@ -1,0 +1,1 @@
+export const path = 'http://test01.varid.pl:4080/api/';

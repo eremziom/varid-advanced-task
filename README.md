@@ -1,5 +1,8 @@
 # varid-advanced-task
 
+##
+Project prepared for Varid Sp. z o.o. recrutation process.
+
 ## Project setup
 ```
 npm install

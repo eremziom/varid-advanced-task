@@ -3,12 +3,12 @@
         <b-table responsive hover :items="dataTable" :fields="dataFields" id="table-1" :current-page="currentPage" :per-page="10">
             <template #cell(buttons)="row">
                 <div class="d-flex flex-row">
-                <b-button variant="info" size="sm" class="mr-2" v-on:click="modifyDataPopUp(row.item)">
-                MODIFY
-                </b-button>
-                <b-button variant="info" size="sm" class="mr-2" v-on:click="removeDataPopUp(row.item)">
-                REMOVE
-                </b-button>
+                    <b-button variant="info" size="sm" class="mr-2" v-on:click="modifyDataPopUp(row.item)">
+                        MODIFY
+                    </b-button>
+                    <b-button variant="info" size="sm" class="mr-2" v-on:click="removeDataPopUp(row.item)">
+                        REMOVE
+                    </b-button>
                 </div>
             </template>
         </b-table>
@@ -22,6 +22,10 @@
             <b-modal id="modal-2" hide-footer :title="`Do you want to remove ${currentItem.name} ${currentItem.last_name} data?`">
                 <b-button class="mt-3" variant="outline-success" block v-on:click="confirmRemove(currentItem)">Yes</b-button>
                 <b-button class="mt-2" variant="outline-danger" block v-on:click="cancelPopup('modal-2')">No</b-button>
+            </b-modal>
+        </div>
+        <div>
+            <b-modal id="modal-7" hide-footer :title="`${removeStatusInfo}`">
             </b-modal>
         </div>
         <b-container>
@@ -39,6 +43,7 @@
 
 <script>
 import axios from 'axios';
+import { path } from '../config';
 export default {
     name: 'Table',
     async created(){
@@ -52,14 +57,14 @@ export default {
     methods: {
         async getAllData(){
             await axios
-            .get('http://test01.varid.pl:4080/api/contacts')
+            .get(`${path}contacts`)
             .then(response => (
-                console.log(response),
-                this.dataTable = response.data,
-                console.log('data pobrana')
+                this.dataTable = response.data
             ))
             .catch(e => (
-                console.log(e)
+                console.log(e),
+                this.removeStatusInfo  = 'Wystpił nieoczekiwany błąd. Spróbuj ponownie później',
+                this.$bvModal.show('modal-7')
             ))
             return this.dataTable
         },
@@ -75,9 +80,20 @@ export default {
             this.$emit('editData', data);
             this.$bvModal.hide('modal-1');
         },
-        confirmRemove(data){
-            console.log('axios z delem', data);
+        async confirmRemove(data){
             this.$bvModal.hide('modal-2');
+            await axios
+            .delete(`${path}contact/delete/${data.id}`)
+            .then(response => (
+                this.removeStatusInfo  = response.data.message,
+                this.$bvModal.show('modal-7'),
+                response.status === 200 ? this.getAllData() : ''
+            ))
+            .catch(e => (
+                console.log(e),
+                this.removeStatusInfo  = 'Wystpił nieoczekiwany błąd. Spróbuj ponownie później',
+                this.$bvModal.show('modal-7')
+            ))
         },
         cancelPopup(id){
             this.$bvModal.hide(id);
@@ -89,6 +105,7 @@ export default {
             dataFields: ['name', 'last_name', 'phone_number', 'email', 'country', 'city', 'address', 'buttons'],
             currentItem: '',
             currentPage: 1,
+            removeStatusInfo: '',
         }
     }
 }

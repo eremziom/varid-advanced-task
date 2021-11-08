@@ -2,7 +2,7 @@
   <div id="app">
     <h2 class="mb-3">Varid Advanced Task</h2>
     <NavBar v-on:changeView="changeView"/>
-    <Form v-if="formView" v-bind:currentData="currentData"/>
+    <Form v-if="formView" v-bind:currentData="currentData" v-on:changeView="changeView"/>
     <Table v-if="tableView" v-on:editData="editData"/>
   </div>
 </template>
@@ -20,11 +20,10 @@ export default {
     NavBar
   },
   methods:{
-    async editData(data){
+    editData(data){
       this.currentData = data;
       this.formView = true;
       this.tableView = false;
-      console.log('data z app', data)
     },
     changeView(arg){
       if(arg === 1){
