@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h2>Varid Advanced Task</h2>
+    <h2 class="mb-3">Varid Advanced Task</h2>
     <NavBar v-on:changeView="changeView"/>
     <Form v-if="formView" v-bind:currentData="currentData"/>
     <Table v-if="tableView" v-on:editData="editData"/>
@@ -30,12 +30,12 @@ export default {
       if(arg === 1){
         this.tableView = true;
         this.formView = false;
-        this.currentData = {};
+        this.currentData = '';
       }
       if(arg === 2){
         this.tableView = false;
         this.formView = true;
-        this.currentData = {};
+        this.currentData = '';
       }
     }
   },
@@ -43,19 +43,18 @@ export default {
     return{
       formView: false,
       tableView: true,
-      currentData: {},
+      currentData: '',
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 </style>

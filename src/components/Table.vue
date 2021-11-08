@@ -1,13 +1,15 @@
 <template>
     <div class="table">
-        <b-table striped hover :items="dataTable" :fields="dataFields" >
+        <b-table responsive hover :items="dataTable" :fields="dataFields" id="table-1" :current-page="currentPage" :per-page="10">
             <template #cell(buttons)="row">
-                <b-button size="sm" class="mr-2" v-on:click="modifyDataPopUp(row.item)">
+                <div class="d-flex flex-row">
+                <b-button variant="info" size="sm" class="mr-2" v-on:click="modifyDataPopUp(row.item)">
                 MODIFY
                 </b-button>
-                <b-button size="sm" class="mr-2" v-on:click="removeDataPopUp(row.item)">
+                <b-button variant="info" size="sm" class="mr-2" v-on:click="removeDataPopUp(row.item)">
                 REMOVE
                 </b-button>
+                </div>
             </template>
         </b-table>
         <div>
@@ -22,6 +24,16 @@
                 <b-button class="mt-2" variant="outline-danger" block v-on:click="cancelPopup('modal-2')">No</b-button>
             </b-modal>
         </div>
+        <b-container>
+            <b-row align-h="center">
+                <b-pagination
+                    v-model="currentPage"
+                    :total-rows="rows"
+                    :per-page="10"
+                    aria-controls="table-1"
+                ></b-pagination>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
@@ -31,6 +43,11 @@ export default {
     name: 'Table',
     async created(){
         await this.getAllData();
+    },
+    computed: {
+      rows() {
+        return this.dataTable.length
+      }
     },
     methods: {
         async getAllData(){
@@ -71,6 +88,7 @@ export default {
             dataTable: [],
             dataFields: ['name', 'last_name', 'phone_number', 'email', 'country', 'city', 'address', 'buttons'],
             currentItem: '',
+            currentPage: 1,
         }
     }
 }
@@ -79,5 +97,7 @@ export default {
 <style lang="css" scoped>
 .table {
     font-size: 12px;
+    max-width: 95%;
+    margin: 0 auto;
 }
 </style>

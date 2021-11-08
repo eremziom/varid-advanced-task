@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5 nav">
+    <div class="mb-3 nav">
         <b-button  variant="info" v-on:click="changeView(1)">TABLE</b-button>
         <b-button  variant="info" v-on:click="changeView(2)">FORM</b-button>
     </div>
